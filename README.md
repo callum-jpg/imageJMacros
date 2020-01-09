@@ -1,6 +1,6 @@
-# ImageJ processing macros to make creating IF figures a little easier
+## ImageJ processing macros to make creating IF figures a little easier
 
-### multi-image-processing
+### multi-image-processing.ijm
 This macro is designed to allow for uniform histogram adjustments of a single
 frame for 1-4 channels.
 
