@@ -12,3 +12,6 @@ if statement for the channel of interest.
 
 Macro currently crops the histogram of all images to 12-bit (0, 4095). Images
 are later converted to 8-bit to maintain applied LUT.
+
+To do:
+- [ ] Add GUI
