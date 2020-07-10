@@ -3,14 +3,12 @@ dir = getDirectory("Select an image parent directory");
 list = getFileList(dir);
 dirName = File.getName(dir);
 
-
-
 // Create arrays for the desired histogram adjustments
 // Histogram values will also be appended to new filenames
-dapiHist = newArray(10, 140);
-gfpHist = newArray(40, 255); // Create array
-mcherryHist = newArray(10, 90);
-cy5Hist = newArray(10, 150);
+dapiHist = newArray(15, 255);
+gfpHist = newArray(55, 255); // Create array
+mcherryHist = newArray(15, 255);
+cy5Hist = newArray(30, 255);
 //Array.print(gfpHist); // Print contents of array
 //print(gfpHist.length); //  Print length of array
 
@@ -18,12 +16,15 @@ cy5Hist = newArray(10, 150);
 outputDir = dir + 'Adjusted images' + File.separator;
 File.makeDirectory(outputDir);
 fileList = fileListOnly(list); // Create file list and exclude folders from array
+//print(list.length, fileList.length);
+
 
 for (i=0; i<fileList.length; i++)	{
 	path = dir + fileList[i]; // must pass single argument to bio-formats
-
-	run("Bio-Formats Importer", "open=["+ path +"]"); // Imports individual image files. Doesn't adjust histogram
+	//run("Bio-Formats Importer", "open=["+ path +"]"); // Imports individual image files. Doesn't adjust histogram
+	open(path);
 	setMinAndMax(0,4095); // Convert image to 12-bit
+	//setMinAndMax(0,7095);
 	run("8-bit"); // Convert images to 8-bit for LUTs
 	imageTitle=getTitle(); // Record the title of the image
 	if (indexOf(imageTitle, 'DAPI') >= 0) {
@@ -66,10 +67,12 @@ for (i=0; i<fileList.length; i++)	{
 		close();
 	}
 }
+
 function fileListOnly(inputList) {
 	// Returns a list of files within and EXCLUDES subdirectories and .nd files from list
 	fileOnlyList = newArray;
 	for (i=0; i<inputList.length; i++) {
+		//print(inputList[i], "= before filter");
 		if (!endsWith(inputList[i], File.separator) && !endsWith(inputList[i], '.nd')) {
 			//print(inputList[i]);
 			//fileOnlyList[i] = inputList[i];
@@ -78,6 +81,8 @@ function fileListOnly(inputList) {
 	}
 	return fileOnlyList;
 }
+
+
 //test = fileListOnly(list);
 //for (i=0; i<test.length; i++) {
 //	print(test[i]);
